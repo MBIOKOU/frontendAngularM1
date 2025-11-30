@@ -1,0 +1,35 @@
+@if (assignmentTransmis){
+<mat-card appearance="outlined">
+  <mat-card-header>
+    <mat-card-title>Détails de l'assignment</mat-card-title>
+    <mat-card-subtitle>
+      On pourrait mettre ici une image
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <p>Nom : {{ assignmentTransmis.nom }}</p>
+    <p>Date de rendu : {{ assignmentTransmis.dateDeRendu | date : 'dd/MM/yyyy' }}</p>
+    <p>Rendu :
+      {{ assignmentTransmis.rendu ? 'Oui' : 'Non' }}
+    </p>
+  </mat-card-content>
+
+  <mat-card-actions class="container">
+    @if(isLogged()) {
+      @if(!assignmentTransmis.rendu) {
+    <mat-checkbox (click)="onAssignmentRendu()">Rendu</mat-checkbox>
+    }
+
+    <nav>
+      <button mat-stroked-button color="primary" (click)="onClickEdit()">EDIT</button>
+    </nav>
+
+    <button mat-flat-button color="warn" (click)="onDeleteAssignment()" [disabled]="!isAdmin()">
+      DELETE
+    </button>
+ }
+  </mat-card-actions>
+</mat-card>
+
+}

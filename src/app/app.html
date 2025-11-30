@@ -1,0 +1,86 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <button mat-button>
+            <mat-icon>home</mat-icon>
+        </button>
+        <button mat-button (click)="opened =! opened">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <span class="spacer"></span>
+
+
+        @if (!isLogged()) {
+          <button mat-raised-button color="primary" routerLink="/login">
+            <mat-icon>login</mat-icon>
+            Se connecter
+          </button>
+        } @else {
+          <span style="margin-right: 15px;">
+            Connecté: {{ authService.getCurrentUser()?.login }} ({{ authService.getCurrentUser()?.role }})
+          </span>
+          <button mat-raised-button color="warn" (click)="logout()">
+            <mat-icon>logout</mat-icon>
+            Se déconnecter
+          </button>
+        }
+
+        <!--
+        @if (!isLogged()) {
+        <mat-form-field appearance="fill">
+            <mat-label>Login</mat-label>
+            <input matInput [(ngModel)]="loginInput" type="text">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Password</mat-label>
+            <input matInput [(ngModel)]="passwordInput" type="password">
+        </mat-form-field>
+
+        @if (loginError) {
+        <p style="color: red;">{{ loginError }}</p>
+        }
+
+        <button mat-raised-button color="primary" (click)="login()">Se connecter</button>
+        } @else {
+        <button mat-raised-button color="warn" (click)="login()">Se déconnecter</button>
+        }
+        -->
+
+        <!--
+        <button mat-button>
+            <mat-icon>login</mat-icon>
+        </button> 
+        
+        -->
+
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-sidenav-container>
+    <mat-sidenav [(opened)]="opened" mode="push">
+        <mat-nav-list>
+            <a mat-list-item>Liste des devoirs</a>
+            <a mat-list-item>Ajout d'un devoir</a>
+            <a mat-list-item>Modification d'un devoir</a>
+            <a mat-list-item>Suppression d'un devoir</a>
+            <a mat-list-item>Génération de données de test</a>
+        </mat-nav-list>
+    </mat-sidenav>
+    
+    <mat-sidenav-content>
+        <h1>
+            <nav>
+                <a routerLink="/home">
+                    {{ title }}
+                </a>
+                <!--
+                 <mat-slide-toggle (click)="login()">
+                    Login
+                </mat-slide-toggle>
+                -->
+            </nav>
+        </h1>
+        <h3>Réalisé par : {{auteur}}</h3>
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>
