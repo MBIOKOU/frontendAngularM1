@@ -12,7 +12,7 @@ import { forkJoin } from 'rxjs';
   providedIn: 'root'
 })
 export class AssignmentsService {
-  backendUrl = 'http://localhost:8010/api/assignments';
+  backendUrl = 'https://apiprojetangularm1.onrender.com/api/assignments';
     
   constructor  (private loggingService :LoggingService, private http: HttpClient){ };
   
@@ -103,4 +103,5 @@ export class AssignmentsService {
 
 
 }
+
 
