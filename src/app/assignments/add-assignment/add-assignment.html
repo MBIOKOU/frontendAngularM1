@@ -1,0 +1,56 @@
+<mat-card appearance="outlined" class="add-card">
+  <mat-card-header>
+    <div mat-card-avatar class="header-icon">
+      <mat-icon>add_circle</mat-icon>
+    </div>
+    <mat-card-title>Nouvel assignment</mat-card-title>
+    <mat-card-subtitle>Créer un nouvel assignment</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <form ngForm class="add-form" #assignmentForm (submit)="onAjouterAssignment($event); assignmentForm.reset()">
+      <div class="form-field-wrapper">
+        <mat-icon class="field-icon">title</mat-icon>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Nom de l'assignment</mat-label>
+          <input matInput 
+                 name="nomAssignment" 
+                 [(ngModel)]="nomAssignment" 
+                 placeholder="Ex: TP Angular"
+                 required>
+          <mat-icon matSuffix>assignment</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <div class="form-field-wrapper">
+        <mat-icon class="field-icon">event</mat-icon>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Date de rendu</mat-label>
+          <input matInput 
+                 [matDatepicker]="picker" 
+                 name="dateDeRendu" 
+                 [(ngModel)]="dateDeRendu" 
+                 required>
+          <mat-hint>Sélectionnez la date limite</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </form>
+  </mat-card-content>
+
+  <mat-card-actions class="actions-container">
+    <button mat-raised-button 
+            color="primary" 
+            (click)="onAjouterAssignment($event); assignmentForm.reset()"
+            [disabled]="!nomAssignment || !dateDeRendu">
+      <mat-icon>add</mat-icon>
+      Ajouter
+    </button>
+
+    <button mat-flat-button (click)="onCancel()" class="cancel-button">
+      <mat-icon>cancel</mat-icon>
+      Annuler
+    </button>
+  </mat-card-actions>
+</mat-card>

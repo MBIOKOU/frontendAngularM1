@@ -1,0 +1,79 @@
+<!-- Boutons d'action en haut avec le titre -->
+<div class="header-with-actions">
+    <h1>
+        @if (filtreRendu === true) {
+            Liste des assignments rendus :
+        } @else if (filtreRendu === false) {
+            Liste des assignments non rendus :
+        } @else if (filtreEnRetard === true) {
+            Liste des assignments en retard :
+        } @else {
+            Liste des assignments ajoutés :
+        }
+    </h1>
+     
+    <div class="action-buttons">
+        @if (isAdmin()) {
+        <button mat-raised-button color="accent" routerLink="/add">
+            <mat-icon>add_circle</mat-icon>
+            Ajouter un assignment
+        </button>
+        }
+        <!--
+        <button mat-raised-button color="primary" (click)="peuplerBD()">
+            <mat-icon>storage</mat-icon>
+            Peupler la BD
+        </button>
+        -->
+    </div>
+</div>
+
+<mat-list>
+    @for(assignment of assignments ; track assignment._id) {
+    <h3 mat-subheader>Date de rendu : {{assignment.dateDeRendu | date : 'dd/MM/yyyy'}}</h3>
+    <mat-list-item [routerLink]="['/assignment', assignment._id]" (click)="assignmentClique(assignment)"
+        style="cursor: pointer;">
+        @if (assignment.rendu) {
+        <p appRendu>
+            Le devoir {{ assignment.nom }} a été rendu le {{ assignment.dateDeRendu | date : 'dd/MM/yyyy' }}.
+        </p>
+        } @else if (estEnRetard(assignment)) {
+        <p appEnRetard>
+            Le devoir {{ assignment.nom }} n'a pas été rendu le {{ assignment.dateDeRendu | date : 'dd/MM/yyyy' }}.
+        </p>
+        } @else {
+        <p appNonrendu>
+            Le devoir {{ assignment.nom }} doit etre rendu le {{ assignment.dateDeRendu | date : 'dd/MM/yyyy' }}.
+        </p>
+        }
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    }
+</mat-list>
+
+<!-- Informations de pagination -->
+<div class="pagination-info">
+    <p>
+        Page {{ page }} sur {{ totalPages }} |
+        Total: {{ totalDocs }} assignments
+    </p>
+</div>
+
+<!-- Boutons de navigation basiques -->
+<div class="pagination-controls">
+    <button mat-raised-button color="primary" (click)="premierePage()" [disabled]="!hasPrevPage">
+        Première page
+    </button>
+
+    <button mat-raised-button color="primary" (click)="pagePrecedente()" [disabled]="!hasPrevPage">
+        Page précédente
+    </button>
+
+    <button mat-raised-button color="primary" (click)="pageSuivante()" [disabled]="!hasNextPage">
+        Page suivante
+    </button>
+
+    <button mat-raised-button color="primary" (click)="dernierePage()" [disabled]="!hasNextPage">
+        Dernière page
+    </button>
+</div>

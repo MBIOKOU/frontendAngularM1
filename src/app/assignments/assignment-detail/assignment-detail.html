@@ -1,0 +1,65 @@
+@if (assignmentTransmis){
+<mat-card appearance="outlined" class="detail-card">
+  <mat-card-header>
+    <div mat-card-avatar class="header-icon">
+      <mat-icon>assignment</mat-icon>
+    </div>
+    <mat-card-title>{{ assignmentTransmis.nom }}</mat-card-title>
+    <mat-card-subtitle>
+      <mat-chip-set>
+        @if(assignmentTransmis.rendu) {
+          <mat-chip class="status-chip rendu">
+            <mat-icon>check_circle</mat-icon>
+            Rendu
+          </mat-chip>
+        } @else {
+          <mat-chip class="status-chip non-rendu">
+            <mat-icon>pending</mat-icon>
+            Non rendu
+          </mat-chip>
+        }
+      </mat-chip-set>
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="info-row">
+      <mat-icon class="info-icon">event</mat-icon>
+      <div class="info-content">
+        <span class="info-label">Date de rendu</span>
+        <span class="info-value">{{ assignmentTransmis.dateDeRendu | date : 'dd/MM/yyyy' }}</span>
+      </div>
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions class="actions-container">
+    @if(isLogged()) {
+      <div class="left-actions">
+        @if(!assignmentTransmis.rendu) {
+          <button mat-raised-button color="primary" (click)="onAssignmentRendu()" [disabled]="estEnRetard()">
+            <mat-icon>done</mat-icon>
+            Marquer comme rendu
+          </button>
+        }
+      </div>
+
+      <div class="right-actions">
+        <button mat-stroked-button color="primary" (click)="onClickEdit()" [disabled]="!isAdmin()">
+          <mat-icon>edit</mat-icon>
+          Modifier
+        </button>
+
+        <button mat-raised-button color="warn" (click)="onDeleteAssignment()" [disabled]="!isAdmin()">
+          <mat-icon>delete</mat-icon>
+          Supprimer
+        </button>
+      </div>
+    }
+
+    <button mat-flat-button (click)="retournerAccueil()" class="back-button">
+      <mat-icon>arrow_back</mat-icon>
+      Retour
+    </button>
+  </mat-card-actions>
+</mat-card>
+}
